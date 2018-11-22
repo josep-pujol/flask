@@ -1,10 +1,10 @@
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 import os
 
  
 app = Flask(__name__)
-
+app.secret_key = 'some_secret'
 
 @app.route('/')
 def index():
@@ -33,7 +33,8 @@ def about_member(member_name):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        print('Hello there?!')  # you get this msg in terminal
+        flash('Thanks {}, we have received your message!'.format(request.form['name']))
+        print(request.form) # just to check
     return render_template('contact.html', page_title='Contact')
 
 
